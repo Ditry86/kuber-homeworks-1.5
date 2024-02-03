@@ -2,6 +2,8 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: my-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
   - host: homework.local
@@ -14,3 +16,10 @@ spec:
             name: nginx-frontend
             port:
               number: 8080
+      - path: /api
+        pathType: Prefix
+        backend:
+          service:
+            name: multitool-backend
+            port:
+              number: 8180
